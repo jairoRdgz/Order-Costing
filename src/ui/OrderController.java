@@ -67,6 +67,13 @@ public class OrderController {
     		int baseAux = Integer.parseInt(base.getText());
     		realRate= cifAux/baseAux;
     		rate.setText(""+ realRate);
+    		addOrder.setDisable(false);
+        	create.setDisable(false);
+        	md.setDisable(false);
+        	mod.setDisable(false);
+        	status.setDisable(false);
+    	}else {
+    		System.out.println("Deje la recocha menor");
     	}
     }
 
@@ -77,6 +84,10 @@ public class OrderController {
 
     @FXML
     void initialize() {
-    	
+    	addOrder.setDisable(true);
+    	create.setDisable(true);
+    	md.setDisable(true);
+    	mod.setDisable(true);
+    	status.setDisable(true);
     }
 }

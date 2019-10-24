@@ -42,6 +42,14 @@ public class Order {
 	public void setMod(double mod) {
 		this.mod = mod;
 	}
+	
+	public double getCif() {
+		return cif;
+	}
+
+	public void setCif(double cif) {
+		this.cif = cif;
+	}
 
 	public String getStatus() {
 		return status;

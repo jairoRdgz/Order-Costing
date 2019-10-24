@@ -9,6 +9,7 @@ public class Order {
 	private int id;
 	private double md;
 	private double mod;
+	private double cif;
 	private String status;
 	
 	public Order(int id, double md, double mod, String status) {
@@ -50,6 +51,8 @@ public class Order {
 		this.status = status;
 	}
 	
-	
+	public void calculateCif(double rate, double base) {
+		cif = rate * base;
+	}
 	
 }

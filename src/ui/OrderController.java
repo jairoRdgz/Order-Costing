@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.Order;
+import model.ResultState;
 
 public class OrderController {
 
@@ -54,10 +56,18 @@ public class OrderController {
     private TextField period;
     
     private double realRate;
+    
+    private ResultState theEnd;
 
     @FXML
     void addOrder(ActionEvent event) {
-
+    	int id = Integer.parseInt(orderNumber.getText());
+    	int mD = Integer.parseInt(md.getText());
+    	int moD = Integer.parseInt(mod.getText());
+    	String statu = (String)status.getValue();
+    	Order newOrder = new Order(id, mD, moD, statu);
+    	theEnd.addOrder(newOrder);
+    	orderNumber.setText(id+1);
     }
 
     @FXML

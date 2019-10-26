@@ -102,7 +102,6 @@ public class OrderController {
     		int cifAux = Integer.parseInt(cif.getText());
     		int baseAux = Integer.parseInt(base.getText());
     		realRate= cifAux/baseAux;
-    		System.out.println(realRate);
     		rate.setText(""+ realRate);
     		addOrder.setDisable(false);
         	create.setDisable(false);
@@ -139,11 +138,11 @@ public class OrderController {
     	String result = "Cost State \n";
     	result+= theEnd.getName()+"\n"+theEnd.getPeriod()+"\n--------------------------------------------------------------------\n--------------------------------------------------------------------\n";
     	result+="Inventario Inicial de MD \t\t\t"+0+"\n";
-    	result+="Compra de MD \t\t\t" + theEnd.consumoMaterialDirecto()+"\n";
+    	result+="Compra de MD \t\t\t\t" + theEnd.consumoMaterialDirecto()+"\n";
     	result+="Inventario Final de MD \t\t\t"+0+"\n--------------------------------------------------------------------"+"\n";
     	result+="Consumo de MD \t\t\t\t"+theEnd.consumoMaterialDirecto()+"\n";
-    	result+="MOD \t\t\t\t\t"+theEnd.manoDeObraDirecta()+"\n";
-    	result+="CIF \t\t\t\t\t\t"+theEnd.costoIndirectoDeFabricacion()+"\n";
+    	result+="MOD \t\t\t\t\t\t"+theEnd.manoDeObraDirecta()+"\n";
+    	result+="CIF \t\t\t\t\t\t\t"+theEnd.costoIndirectoDeFabricacion()+"\n";
     	result+="--------------------------------------------------------------------\n";
     	double costosAP = theEnd.manoDeObraDirecta()+theEnd.costoIndirectoDeFabricacion()+theEnd.consumoMaterialDirecto();
     	result+="Costos Agregados a produccion \t"+costosAP+"\n";
@@ -151,8 +150,8 @@ public class OrderController {
     	result+="Inventario Final PP \t\t\t\t"+theEnd.inventarioFinalPP()+"\n";
     	result+="--------------------------------------------------------------------\n";
     	double costosPT = costosAP-theEnd.inventarioFinalPP();
-    	result+="Costos PT \t\t\t\t"+costosPT+"\n";
-    	result+="Inventario Inicial PT \t\t\t\t"+0+"\n";
+    	result+="Costos PT \t\t\t\t\t"+costosPT+"\n";
+    	result+="Inventario Inicial PT \t\t"+0+"\n";
     	result+="Inventario Final PT \t\t\t\t"+theEnd.inventarioFinalPT()+"\n";
     	double costoVenta = costosPT-theEnd.inventarioFinalPT();
     	result+="Costo de Venta \t\t\t\t"+costoVenta+"\n";

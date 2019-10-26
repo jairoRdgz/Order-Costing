@@ -84,11 +84,12 @@ public class OrderController {
     	}
     	String statu = (String)status.getValue();
     	Order newOrder = new Order(id, mD, moD, statu);
+    	newOrder.calculateCif(realRate, moD);
     	if(theEnd==null) {
     		theEnd = new ResultState(name.getText(), period.getText());
     	}
     	theEnd.addOrder(newOrder);
-    	orderNumber.setText((id+1)+"");
+    	orderNumber.setText("  " + (id+1));
     	
     	md.setText("");
     	mod.setText("");
@@ -147,5 +148,6 @@ public class OrderController {
     	md.setDisable(true);
     	mod.setDisable(true);
     	status.setDisable(true);
+    	orderNumber.setText("  " + 1);
     }
 }

@@ -82,14 +82,14 @@ public class OrderController {
     	}catch(NumberFormatException e) {
     		Information("Please Enter a number");
     	}
-    	String statu = (String)status.getValue();
+    	String statu = (String) status.getValue();
     	Order newOrder = new Order(id, mD, moD, statu);
     	newOrder.calculateCif(realRate, moD);
     	if(theEnd==null) {
     		theEnd = new ResultState(name.getText(), period.getText());
     	}
     	theEnd.addOrder(newOrder);
-    	orderNumber.setText("  " + (id+1));
+    	orderNumber.setText("" + (id+1));
     	
     	md.setText("");
     	mod.setText("");
@@ -102,6 +102,7 @@ public class OrderController {
     		int cifAux = Integer.parseInt(cif.getText());
     		int baseAux = Integer.parseInt(base.getText());
     		realRate= cifAux/baseAux;
+    		System.out.println(realRate);
     		rate.setText(""+ realRate);
     		addOrder.setDisable(false);
         	create.setDisable(false);
@@ -128,9 +129,35 @@ public class OrderController {
     	Optional<ButtonType> result = alert.showAndWait();
     	if (result.get() == ButtonType.OK){
     		Information("Supuestamente voy a crear un archivo de texto con la informacion de costos");
+    		Information(costState());
     	} else {
-    		Information("No se si crear un nuevo fxml o mostrar en una alerta el estado de costos");
+    		Information(costState());
     	}
+    }
+    
+    public String costState() {
+    	String result = "Cost State \n";
+    	result+= theEnd.getName()+"\n"+theEnd.getPeriod()+"\n--------------------------------------------------------------------\n--------------------------------------------------------------------\n";
+    	result+="Inventario Inicial de MD \t\t\t"+0+"\n";
+    	result+="Compra de MD \t\t\t" + theEnd.consumoMaterialDirecto()+"\n";
+    	result+="Inventario Final de MD \t\t\t"+0+"\n--------------------------------------------------------------------"+"\n";
+    	result+="Consumo de MD \t\t\t\t"+theEnd.consumoMaterialDirecto()+"\n";
+    	result+="MOD \t\t\t\t\t"+theEnd.manoDeObraDirecta()+"\n";
+    	result+="CIF \t\t\t\t\t\t"+theEnd.costoIndirectoDeFabricacion()+"\n";
+    	result+="--------------------------------------------------------------------\n";
+    	double costosAP = theEnd.manoDeObraDirecta()+theEnd.costoIndirectoDeFabricacion()+theEnd.consumoMaterialDirecto();
+    	result+="Costos Agregados a produccion \t"+costosAP+"\n";
+    	result+="Inventario Inicial PP \t\t\t\t"+0+"\n";
+    	result+="Inventario Final PP \t\t\t\t"+theEnd.inventarioFinalPP()+"\n";
+    	result+="--------------------------------------------------------------------\n";
+    	double costosPT = costosAP-theEnd.inventarioFinalPP();
+    	result+="Costos PT \t\t\t\t"+costosPT+"\n";
+    	result+="Inventario Inicial PT \t\t\t\t"+0+"\n";
+    	result+="Inventario Final PT \t\t\t\t"+theEnd.inventarioFinalPT()+"\n";
+    	double costoVenta = costosPT-theEnd.inventarioFinalPT();
+    	result+="Costo de Venta \t\t\t\t"+costoVenta+"\n";
+    	result+="--------------------------------------------------------------------";
+    	return result;
     }
     
     public void createFile(String fileName) {
@@ -148,6 +175,6 @@ public class OrderController {
     	md.setDisable(true);
     	mod.setDisable(true);
     	status.setDisable(true);
-    	orderNumber.setText("  " + 1);
+    	//orderNumber.setText("  " + 1);
     }
 }

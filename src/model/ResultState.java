@@ -7,6 +7,7 @@ public class ResultState {
 	private String Period;
 	private ArrayList<Order> orders;
 	
+	
 	public ResultState(String n, String p) {
 		this.name = n;
 		this.Period = p;
@@ -41,7 +42,7 @@ public class ResultState {
 		orders.add(order);
 	}
 	
-	public double consumoMaterialDirecto() { //poner en english plz
+	public double consumoMaterialDirecto() {
 		double result = 0.0;
 		for (int i = 0; i <orders.size() ; i++) {
 			result+= orders.get(i).getMd();
@@ -86,5 +87,4 @@ public class ResultState {
 		}
 		return result;
 	}
-	
 }

@@ -41,11 +41,50 @@ public class ResultState {
 		orders.add(order);
 	}
 	
-	public double compraMaterialDirecto() { //poner en english plz
+	public double consumoMaterialDirecto() { //poner en english plz
 		double result = 0.0;
 		for (int i = 0; i <orders.size() ; i++) {
 			result+= orders.get(i).getMd();
 		}
 		return result;
 	}
+	
+	public double manoDeObraDirecta() {
+		double result = 0.0;
+		for (int i = 0; i <orders.size() ; i++) {
+			result+= orders.get(i).getMod();
+		}
+		return result;
+	}
+	
+	public double costoIndirectoDeFabricacion() {
+		double result = 0.0;
+		for (int i = 0; i <orders.size() ; i++) {
+			result+= orders.get(i).getCif();
+		}
+		return result;
+	}
+	
+	public double inventarioFinalPP() {
+		double result = 0.0;
+		for (int i = 0; i <orders.size() ; i++) {
+			if(orders.get(i).getStatus().equals("in Process")) {
+				double aggregateCosts = orders.get(i).getMd() + orders.get(i).getMod() + orders.get(i).getCif();
+				result += aggregateCosts;
+			}
+		}
+		return result;
+	}
+	
+	public double inventarioFinalPT() {
+		double result = 0.0;
+		for (int i = 0; i <orders.size() ; i++) {
+			if(orders.get(i).getStatus().equals("Finished")) {
+				double aggregateCosts = orders.get(i).getMd() + orders.get(i).getMod() + orders.get(i).getCif();
+				result += aggregateCosts;
+			}
+		}
+		return result;
+	}
+	
 }

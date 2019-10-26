@@ -10,6 +10,7 @@ public class ResultState {
 	public ResultState(String n, String p) {
 		this.name = n;
 		this.Period = p;
+		orders = new ArrayList<Order>();
 	}
 
 	public String getName() {

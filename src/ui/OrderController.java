@@ -136,7 +136,8 @@ public class OrderController {
     
     public String costState() {
     	String result = "\t\t\t\t"+theEnd.getName() + "\n";
-    	result+=  "\t\t\t\t Estado de Costos" + "\n\t\t\t\t"+theEnd.getPeriod()+
+    	result+=
+    			"\t\t\t\t Estado de Costos" + "\n\t\t\t\t"+theEnd.getPeriod()+
     			"\n--------------------------------------------------------------------\n--------------------------------------------------------------------\n";
     	result+="Inventario Inicial de MD \t\t\t"+0+"\n";
     	result+="Compra de MD \t\t\t\t" + theEnd.consumoMaterialDirecto()+"\n";

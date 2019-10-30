@@ -84,6 +84,7 @@ public class ResultState {
 		double result = 0.0;
 		for (int i = 0; i <orders.size() ; i++) {
 			if(orders.get(i).isActual()==false) {
+				
 				result+= orders.get(i).getCif();
 			}
 		}

@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.Order;
 import model.ResultState;
@@ -94,6 +93,7 @@ public class OrderController {
     	md.setText("");
     	mod.setText("");
     	status.hide();
+    	orderNumber.setText("");
     }
 
     @FXML
@@ -138,31 +138,40 @@ public class OrderController {
     	}else {
     		Information("Please enter a value into the real CIF field");
     	}
+    	cifReales.setText("");
     }
     
     public String costState() {
+    	
+    	double consumoMaterialDirecto = theEnd.consumoMaterialDirecto();
+    	double manoDeObraDirecta = theEnd.manoDeObraDirecta();
+    	double costoIndirectoDeFabricacion = theEnd.costoIndirectoDeFabricacion();
+    	double costosAP = manoDeObraDirecta + costoIndirectoDeFabricacion +consumoMaterialDirecto;
+    	double inventarioInicialPP = theEnd.inventarioInicialPP();
+    	double inventarioFinalPP = theEnd.inventarioFinalPP();
+    	double costosPT = costosAP + inventarioInicialPP - inventarioFinalPP;
+    	double inventarioInicialPT = theEnd.inventarioInicialPT();
+    	double inventarioFinalPT = theEnd.inventarioFinalPT();
+    	double costoVenta = costosPT + inventarioInicialPT - inventarioFinalPT;
+    	
     	String result = "\t\t\t\t"+theEnd.getName() + "\n";
-    	result+=
-    			"\t\t\t\t Estado de Costos" + "\n\t\t\t\t"+theEnd.getPeriod()+
+    	result+="\t\t\t\t Estado de Costos" + "\n\t\t\t\t"+theEnd.getPeriod()+
     			"\n--------------------------------------------------------------------\n--------------------------------------------------------------------\n";
     	result+="Inventario Inicial de MD \t\t\t"+0+"\n";
-    	result+="Compra de MD \t\t\t\t" + theEnd.consumoMaterialDirecto()+"\n";
+    	result+="Compra de MD \t\t\t\t" + (consumoMaterialDirecto)+"\n";
     	result+="Inventario Final de MD \t\t\t"+0+"\n--------------------------------------------------------------------"+"\n";
-    	result+="Consumo de MD \t\t"+theEnd.consumoMaterialDirecto()+"\n";
-    	result+="MOD \t\t\t\t\t\t"+theEnd.manoDeObraDirecta()+"\n";
-    	result+="CIF \t\t\t\t\t\t"+theEnd.costoIndirectoDeFabricacion()+"\n";
+    	result+="Consumo de MD \t\t\t\t"+(consumoMaterialDirecto)+"\n";
+    	result+="MOD \t\t\t\t\t\t"+(manoDeObraDirecta)+"\n";
+    	result+="CIF \t\t\t\t\t\t\t"+(costoIndirectoDeFabricacion)+"\n";
     	result+="--------------------------------------------------------------------\n";
-    	double costosAP = theEnd.manoDeObraDirecta()+theEnd.costoIndirectoDeFabricacion()+theEnd.consumoMaterialDirecto();
-    	result+="Costos Agregados a produccion \t"+costosAP+"\n";
-    	result+="Inventario Inicial PP \t\t\t"+theEnd.inventarioInicialPP()+"\n";
-    	result+="Inventario Final PP \t\t\t"+theEnd.inventarioFinalPP()+"\n";
+    	result+="Costos Agregados a produccion \t"+(costosAP)+"\n";
+    	result+="Inventario Inicial PP \t\t\t"+(inventarioInicialPP)+"\n";
+    	result+="Inventario Final PP \t\t\t\t"+(inventarioFinalPP)+"\n";
     	result+="--------------------------------------------------------------------\n";
-    	double costosPT = costosAP+theEnd.inventarioInicialPP()-theEnd.inventarioFinalPP();
-    	result+="Costos PT \t\t\t\t\t"+costosPT+"\n";
-    	result+="Inventario Inicial PT \t\t\t"+theEnd.inventarioInicialPT()+"\n";
-    	result+="Inventario Final PT \t\t\t"+theEnd.inventarioFinalPT()+"\n";
-    	double costoVenta = costosPT+theEnd.inventarioInicialPT()-theEnd.inventarioFinalPT();
-    	result+="Costo de Venta \t\t\t\t"+costoVenta+"\n";
+    	result+="Costos PT \t\t\t\t\t"+(costosPT)+"\n";
+    	result+="Inventario Inicial PT \t\t\t"+(inventarioInicialPT)+"\n";
+    	result+="Inventario Final PT \t\t\t\t"+(inventarioFinalPT)+"\n";
+    	result+="Costo de Venta \t\t\t\t"+(costoVenta)+"\n";
     	result+="--------------------------------------------------------------------";
     	return result;
     }
@@ -184,6 +193,5 @@ public class OrderController {
     	status.setDisable(true);
     	actual.setDisable(true);
     	orderNumber.setDisable(true);
-    	//orderNumber.setText("  " + 1);
     }
 }

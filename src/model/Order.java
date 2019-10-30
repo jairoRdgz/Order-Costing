@@ -10,13 +10,15 @@ public class Order {
 	private double md;
 	private double mod;
 	private double cif;
+	private boolean actual;
 	private String status;
 	
-	public Order(int id, double md, double mod, String status) {
+	public Order(int id, double md, double mod, String status, boolean actual) {
 		this.id = id;
 		this.md = md;
 		this.mod = mod;
 		this.status = status;
+		this.actual = actual;
 	}
 
 	public int getId() {
@@ -61,6 +63,14 @@ public class Order {
 	
 	public void calculateCif(double rate, double base) {
 		cif = rate * base;
+	}
+
+	public boolean isActual() {
+		return actual;
+	}
+
+	public void setActual(boolean actual) {
+		this.actual = actual;
 	}
 	
 }

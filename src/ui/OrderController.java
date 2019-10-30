@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,26 +18,11 @@ import model.ResultState;
 
 public class OrderController {
 
-    @FXML
+	@FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
-
-    @FXML
-    private TextField cif;
-
-    @FXML
-    private TextField base;
-
-    @FXML
-    private Button calculate;
-
-    @FXML
-    private Label rate;
-
-    @FXML
-    private Label orderNumber;
 
     @FXML
     private TextField md;
@@ -45,7 +31,7 @@ public class OrderController {
     private TextField mod;
 
     @FXML
-    private ChoiceBox<String> status;
+    private ChoiceBox<?> status;
 
     @FXML
     private Button addOrder;
@@ -58,6 +44,16 @@ public class OrderController {
 
     @FXML
     private TextField period;
+
+    @FXML
+    private CheckBox actual;
+
+    @FXML
+    private TextField orderNumber;
+
+    @FXML
+    private TextField cifReales;
+    
     
     private double realRate;
     
@@ -83,7 +79,8 @@ public class OrderController {
     		Information("Please Enter a number");
     	}
     	String statu = (String) status.getValue();
-    	Order newOrder = new Order(id, mD, moD, statu);
+    	boolean esActual = actual.isSelected();
+    	Order newOrder = new Order(id, mD, moD, statu,esActual);
     	newOrder.calculateCif(realRate, moD);
     	if(theEnd==null) {
     		theEnd = new ResultState(name.getText(), period.getText());

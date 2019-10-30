@@ -53,7 +53,19 @@ public class ResultState {
 	public double manoDeObraDirecta() {
 		double result = 0.0;
 		for (int i = 0; i <orders.size() ; i++) {
-			result+= orders.get(i).getMod();
+			if(orders.get(i).isActual()) {
+				result+= orders.get(i).getMod();
+			}
+		}
+		return result;
+	}
+	
+	public double manoDeObraDirectaPasada() {
+		double result = 0.0;
+		for (int i = 0; i <orders.size() ; i++) {
+			if(orders.get(i).isActual()==false) {
+				result+= orders.get(i).getMod();
+			}
 		}
 		return result;
 	}
@@ -61,7 +73,19 @@ public class ResultState {
 	public double costoIndirectoDeFabricacion() {
 		double result = 0.0;
 		for (int i = 0; i <orders.size() ; i++) {
-			result+= orders.get(i).getCif();
+			if(orders.get(i).isActual()) {
+				result+= orders.get(i).getCif();
+			}
+		}
+		return result;
+	}
+	
+	public double costoIndirectoDeFabricacionPasado() {
+		double result = 0.0;
+		for (int i = 0; i <orders.size() ; i++) {
+			if(orders.get(i).isActual()==false) {
+				result+= orders.get(i).getCif();
+			}
 		}
 		return result;
 	}
@@ -69,9 +93,24 @@ public class ResultState {
 	public double inventarioFinalPP() {
 		double result = 0.0;
 		for (int i = 0; i <orders.size() ; i++) {
-			if(orders.get(i).getStatus().equals("in Process")) {
-				double aggregateCosts = orders.get(i).getMd() + orders.get(i).getMod() + orders.get(i).getCif();
-				result += aggregateCosts;
+			if(orders.get(i).isActual()) {
+				if(orders.get(i).getStatus().equals("in Process")) {
+					double aggregateCosts = orders.get(i).getMd() + orders.get(i).getMod() + orders.get(i).getCif();
+					result += aggregateCosts;
+				}
+			}
+		}
+		return result;
+	}
+	
+	public double inventarioInicialPP() {
+		double result = 0.0;
+		for (int i = 0; i <orders.size() ; i++) {
+			if(orders.get(i).isActual()==false) {
+				if(orders.get(i).getStatus().equals("in Process")) {
+					double aggregateCosts = orders.get(i).getMd() + orders.get(i).getMod() + orders.get(i).getCif();
+					result += aggregateCosts;
+				}
 			}
 		}
 		return result;
@@ -80,9 +119,24 @@ public class ResultState {
 	public double inventarioFinalPT() {
 		double result = 0.0;
 		for (int i = 0; i <orders.size() ; i++) {
-			if(orders.get(i).getStatus().equals("Finished")) {
-				double aggregateCosts = orders.get(i).getMd() + orders.get(i).getMod() + orders.get(i).getCif();
-				result += aggregateCosts;
+			if(orders.get(i).isActual()) {
+				if(orders.get(i).getStatus().equals("Finished")) {
+					double aggregateCosts = orders.get(i).getMd() + orders.get(i).getMod() + orders.get(i).getCif();
+					result += aggregateCosts;
+				}
+			}
+		}
+		return result;
+	}
+	
+	public double inventarioInicialPT() {
+		double result = 0.0;
+		for (int i = 0; i <orders.size() ; i++) {
+			if(orders.get(i).isActual()==false) {
+				if(orders.get(i).getStatus().equals("Finished")) {
+					double aggregateCosts = orders.get(i).getMd() + orders.get(i).getMod() + orders.get(i).getCif();
+					result += aggregateCosts;
+				}
 			}
 		}
 		return result;

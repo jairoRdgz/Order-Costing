@@ -31,7 +31,7 @@ public class OrderController {
     private TextField mod;
 
     @FXML
-    private ChoiceBox<?> status;
+    private ChoiceBox<String> status;
 
     @FXML
     private Button addOrder;
@@ -54,6 +54,8 @@ public class OrderController {
     @FXML
     private TextField cifReales;
     
+    @FXML
+    private Button contin;
     
     private double realRate;
     
@@ -68,6 +70,7 @@ public class OrderController {
 
     @FXML
     void addOrder(ActionEvent event) {
+    	create.setDisable(false);
     	int id = 0;
     	int mD = 0;
     	int moD = 0;
@@ -76,12 +79,12 @@ public class OrderController {
         	mD = Integer.parseInt(md.getText());
         	moD = Integer.parseInt(mod.getText());
     	}catch(NumberFormatException e) {
+    		create.setDisable(true);
     		Information("Please Enter a number");
     	}
     	String statu = (String) status.getValue();
     	boolean esActual = actual.isSelected();
-    	Order newOrder = new Order(id, mD, moD, statu,esActual);
-    	newOrder.calculateCif(realRate, moD);
+    	Order newOrder = new Order(id, mD, moD, statu, esActual);
     	if(theEnd==null) {
     		theEnd = new ResultState(name.getText(), period.getText());
     	}
@@ -94,22 +97,18 @@ public class OrderController {
     }
 
     @FXML
-    void calculate(ActionEvent event){
-    	if(!name.getText().equals("") && !period.getText().equals("") && !cif.getText().equals("") && !base.getText().equals("")) {
-    		double cifAux = Double.parseDouble(cif.getText());
-    		double baseAux = Double.parseDouble(base.getText());
-    		realRate= cifAux/baseAux;
-    		rate.setText(""+ realRate);
+    void contin(ActionEvent event){
+    	if(!name.getText().equals("") && !period.getText().equals("")) {
     		addOrder.setDisable(false);
-        	create.setDisable(false);
         	md.setDisable(false);
         	mod.setDisable(false);
         	status.setDisable(false);
+        	orderNumber.setDisable(false);
+        	actual.setDisable(false);
         	
         	name.setDisable(true);;
         	period.setDisable(true);;
-        	cif.setDisable(true);;
-        	base.setDisable(true);
+        	
     	}else {
     		Information("Please enter a value into the active fields");
     	}
@@ -117,17 +116,27 @@ public class OrderController {
 
     @FXML
     void create(ActionEvent event) {
-    	Alert alert = new Alert(AlertType.CONFIRMATION);
-    	alert.setTitle("CG Costing");
-    	alert.setHeaderText("Information managment");
-    	alert.setContentText("Do you want to save the information?");
+    	if(!cifReales.getText().contentEquals("")) {
+    		double cifAux = theEnd.costoIndirectoDeFabricacionPasado();
+    		double baseAux = theEnd.manoDeObraDirectaPasada();
+    		realRate= cifAux/baseAux;
+    		
+    		theEnd.calcularCif(realRate);
+        	
+        	Alert alert = new Alert(AlertType.CONFIRMATION);
+        	alert.setTitle("CG Costing");
+        	alert.setHeaderText("Information managment");
+        	alert.setContentText("Do you want to save the information?");
 
-    	Optional<ButtonType> result = alert.showAndWait();
-    	if (result.get() == ButtonType.OK){
-    		Information("Supuestamente voy a crear un archivo de texto con la informacion de costos");
-    		Information(costState());
-    	} else {
-    		Information(costState());
+        	Optional<ButtonType> result = alert.showAndWait();
+        	if (result.get() == ButtonType.OK){
+        		Information("Supuestamente voy a crear un archivo de texto con la informacion de costos");
+        		Information(costState());
+        	} else {
+        		Information(costState());
+        	}
+    	}else {
+    		Information("Please enter a value into the real CIF field");
     	}
     }
     
@@ -139,20 +148,20 @@ public class OrderController {
     	result+="Inventario Inicial de MD \t\t\t"+0+"\n";
     	result+="Compra de MD \t\t\t\t" + theEnd.consumoMaterialDirecto()+"\n";
     	result+="Inventario Final de MD \t\t\t"+0+"\n--------------------------------------------------------------------"+"\n";
-    	result+="Consumo de MD \t\t\t\t"+theEnd.consumoMaterialDirecto()+"\n";
+    	result+="Consumo de MD \t\t"+theEnd.consumoMaterialDirecto()+"\n";
     	result+="MOD \t\t\t\t\t\t"+theEnd.manoDeObraDirecta()+"\n";
-    	result+="CIF \t\t\t\t\t\t\t"+theEnd.costoIndirectoDeFabricacion()+"\n";
+    	result+="CIF \t\t\t\t\t\t"+theEnd.costoIndirectoDeFabricacion()+"\n";
     	result+="--------------------------------------------------------------------\n";
     	double costosAP = theEnd.manoDeObraDirecta()+theEnd.costoIndirectoDeFabricacion()+theEnd.consumoMaterialDirecto();
     	result+="Costos Agregados a produccion \t"+costosAP+"\n";
-    	result+="Inventario Inicial PP \t\t\t"+0+"\n";
-    	result+="Inventario Final PP \t\t\t\t"+theEnd.inventarioFinalPP()+"\n";
+    	result+="Inventario Inicial PP \t\t\t"+theEnd.inventarioInicialPP()+"\n";
+    	result+="Inventario Final PP \t\t\t"+theEnd.inventarioFinalPP()+"\n";
     	result+="--------------------------------------------------------------------\n";
-    	double costosPT = costosAP-theEnd.inventarioFinalPP();
+    	double costosPT = costosAP+theEnd.inventarioInicialPP()-theEnd.inventarioFinalPP();
     	result+="Costos PT \t\t\t\t\t"+costosPT+"\n";
-    	result+="Inventario Inicial PT \t\t\t"+0+"\n";
-    	result+="Inventario Final PT \t\t\t\t"+theEnd.inventarioFinalPT()+"\n";
-    	double costoVenta = costosPT-theEnd.inventarioFinalPT();
+    	result+="Inventario Inicial PT \t\t\t"+theEnd.inventarioInicialPT()+"\n";
+    	result+="Inventario Final PT \t\t\t"+theEnd.inventarioFinalPT()+"\n";
+    	double costoVenta = costosPT+theEnd.inventarioInicialPT()-theEnd.inventarioFinalPT();
     	result+="Costo de Venta \t\t\t\t"+costoVenta+"\n";
     	result+="--------------------------------------------------------------------";
     	return result;
@@ -173,6 +182,8 @@ public class OrderController {
     	md.setDisable(true);
     	mod.setDisable(true);
     	status.setDisable(true);
+    	actual.setDisable(true);
+    	orderNumber.setDisable(true);
     	//orderNumber.setText("  " + 1);
     }
 }

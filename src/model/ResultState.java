@@ -141,4 +141,10 @@ public class ResultState {
 		}
 		return result;
 	}
+	
+	public void calcularCif(double realRate) {
+		for (int i = 0; i < orders.size(); i++) {
+			orders.get(i).calculateCif(realRate, orders.get(i).getMod());
+		}
+	}
 }

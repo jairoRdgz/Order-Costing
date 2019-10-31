@@ -48,12 +48,18 @@ public class OrderController {
 
     @FXML
     private TextField orderNumber;
-
-    @FXML
-    private TextField cifReales;
     
     @FXML
     private Button contin;
+    
+    @FXML
+    private TextField basePresupuestada;
+    
+    @FXML
+    private TextField cifPresupuestados;
+    
+    @FXML
+    private TextField cifPasados;
     
     private double realRate;
     
@@ -83,6 +89,11 @@ public class OrderController {
     	String statu = (String) status.getValue();
     	boolean esActual = actual.isSelected();
     	Order newOrder = new Order(id, mD, moD, statu, esActual);
+    	if(!esActual) {
+    		newOrder.setCif(Double.parseDouble(cifPasados.getText()));
+    	}else {
+    		newOrder.calculateCif(realRate, moD);
+    	}
     	if(theEnd==null) {
     		theEnd = new ResultState(name.getText(), period.getText());
     	}
@@ -93,41 +104,52 @@ public class OrderController {
     	mod.setText("");
     	status.hide();
     	orderNumber.setText("");
+    	cifPasados.setText("");
     }
 
     @FXML
     void contin(ActionEvent event){
-    	if(!name.getText().equals("") && !period.getText().equals("")) {
+    	if(!name.getText().equals("") && !period.getText().equals("") && !cifPresupuestados.getText().equals("")&&!basePresupuestada.getText().equals("")) {
     		addOrder.setDisable(false);
         	md.setDisable(false);
         	mod.setDisable(false);
         	status.setDisable(false);
         	orderNumber.setDisable(false);
         	actual.setDisable(false);
+        	cifPasados.setDisable(false);
         	
-        	name.setDisable(true);;
-        	period.setDisable(true);;
+        	double cifAux = Double.parseDouble(cifPresupuestados.getText());
+    		double baseAux = Double.parseDouble(basePresupuestada.getText());
+    		realRate= cifAux/baseAux;
+    		
+    		if(theEnd==null) {
+        		theEnd = new ResultState(name.getText(), period.getText());
+        	}
+    		        	
+        	name.setDisable(true);
+        	period.setDisable(true);
+        	cifPresupuestados.setDisable(true);
+        	basePresupuestada.setDisable(true);
         	
     	}else {
     		Information("Please enter a value into the active fields");
     	}
     }
+    
+    @FXML
+    void actualPressed(ActionEvent event) {
+    	if(actual.isSelected()) {
+    		cifPasados.setDisable(true);
+    	}else {
+    		cifPasados.setDisable(false);
+    	}
+    }
 
     @FXML
-    void create(ActionEvent event) {
-    	if(!cifReales.getText().contentEquals("")) {
-    		double cifAux = theEnd.costoIndirectoDeFabricacionPasado();
-    		double baseAux = theEnd.manoDeObraDirectaPasada();
-    		realRate= cifAux/baseAux;
-    		
-    		theEnd.calcularCif(realRate);
-    		
-    		Information(costState());
-        	
-    	}else {
-    		Information("Please enter a value into the real CIF field");
-    	}
-    	cifReales.setText("");
+    void create(ActionEvent event) {	
+    	Information(costState());
+    	cifPresupuestados.setText("");
+    	basePresupuestada.setText("");
     }
     
     public String costState() {
@@ -184,5 +206,6 @@ public class OrderController {
     	status.setDisable(true);
     	actual.setDisable(true);
     	orderNumber.setDisable(true);
+    	cifPasados.setDisable(true);
     }
 }

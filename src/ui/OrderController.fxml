@@ -9,37 +9,40 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.OrderController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.OrderController">
    <children>
       <Label layoutX="231.0" layoutY="1.0" prefHeight="48.0" prefWidth="124.0" text="CG Costing">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="23.0" layoutY="154.0" text="Ordenes">
+      <Label layoutX="23.0" layoutY="241.0" text="Ordenes">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="243.0" text="Material Directo: " />
-      <Label layoutX="32.0" layoutY="280.0" text="Mano de Obra Directa: " />
-      <TextField fx:id="md" layoutX="156.0" layoutY="239.0" />
-      <TextField fx:id="mod" layoutX="156.0" layoutY="277.0" />
-      <ChoiceBox fx:id="status" layoutX="155.0" layoutY="311.0" prefWidth="150.0" />
-      <Label layoutX="32.0" layoutY="315.0" text="Estado de Orden: " />
-      <Button fx:id="addOrder" layoutX="416.0" layoutY="246.0" mnemonicParsing="false" onAction="#addOrder" text="Agregar Orden" />
-      <Button fx:id="create" layoutX="401.0" layoutY="434.0" mnemonicParsing="false" onAction="#create" text="Crear Estado de Costos" />
+      <Label layoutX="38.0" layoutY="330.0" text="Material Directo: " />
+      <Label layoutX="32.0" layoutY="367.0" text="Mano de Obra Directa: " />
+      <TextField fx:id="md" layoutX="156.0" layoutY="326.0" />
+      <TextField fx:id="mod" layoutX="156.0" layoutY="364.0" />
+      <ChoiceBox fx:id="status" layoutX="155.0" layoutY="429.0" prefWidth="150.0" />
+      <Label layoutX="32.0" layoutY="433.0" text="Estado de Orden: " />
+      <Button fx:id="addOrder" layoutX="416.0" layoutY="333.0" mnemonicParsing="false" onAction="#addOrder" text="Agregar Orden" />
+      <Button fx:id="create" layoutX="394.0" layoutY="429.0" mnemonicParsing="false" onAction="#create" text="Crear Estado de Costos" />
       <TextField fx:id="name" layoutX="154.0" layoutY="56.0" />
       <Label layoutX="23.0" layoutY="60.0" text="Nombre de la Empresa: " />
       <Label layoutX="47.0" layoutY="100.0" text="Periodo de: " />
       <TextField fx:id="period" layoutX="153.0" layoutY="96.0" prefHeight="25.0" prefWidth="149.0" />
-      <Line endX="499.0" layoutX="100.0" layoutY="144.0" startX="-100.0" />
-      <CheckBox fx:id="actual" layoutX="147.0" layoutY="351.0" mnemonicParsing="false" text="Periodo Actual" />
-      <TextField fx:id="orderNumber" layoutX="157.0" layoutY="202.0" />
-      <Label layoutX="31.0" layoutY="206.0" text="Numero de la orden" />
-      <Line endX="499.0" layoutX="100.0" layoutY="404.0" startX="-100.0" />
-      <Label layoutX="34.0" layoutY="429.0" text="Cif Reales:" />
-      <TextField fx:id="cifReales" layoutX="127.0" layoutY="425.0" prefHeight="25.0" prefWidth="167.0" />
+      <CheckBox fx:id="actual" layoutX="147.0" layoutY="469.0" mnemonicParsing="false" onAction="#actualPressed" text="Periodo Actual" />
+      <Line endX="499.0" layoutX="100.0" layoutY="231.0" startX="-100.0" />
+      <TextField fx:id="orderNumber" layoutX="157.0" layoutY="289.0" />
+      <Label layoutX="31.0" layoutY="293.0" text="Numero de la orden" />
       <Button fx:id="contin" layoutX="402.0" layoutY="98.0" mnemonicParsing="false" onAction="#contin" text="Continuar" />
+      <Label layoutX="66.0" layoutY="402.0" text="CIF" />
+      <TextField fx:id="cifPasados" layoutX="157.0" layoutY="398.0" />
+      <Label layoutX="27.0" layoutY="150.0" text="Cif Presupuestados:" />
+      <TextField fx:id="cifPresupuestados" layoutX="141.0" layoutY="146.0" prefHeight="25.0" prefWidth="167.0" />
+      <TextField fx:id="basePresupuestada" layoutX="141.0" layoutY="180.0" prefHeight="25.0" prefWidth="167.0" />
+      <Label layoutX="25.0" layoutY="184.0" text="Base Presupuestada:" />
    </children>
 </Pane>

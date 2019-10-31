@@ -1,14 +1,13 @@
 package ui;
 
 import java.net.URL;
-import java.util.Optional;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -122,19 +121,9 @@ public class OrderController {
     		realRate= cifAux/baseAux;
     		
     		theEnd.calcularCif(realRate);
+    		
+    		Information(costState());
         	
-        	Alert alert = new Alert(AlertType.CONFIRMATION);
-        	alert.setTitle("CG Costing");
-        	alert.setHeaderText("Information managment");
-        	alert.setContentText("Do you want to save the information?");
-
-        	Optional<ButtonType> result = alert.showAndWait();
-        	if (result.get() == ButtonType.OK){
-        		Information("Supuestamente voy a crear un archivo de texto con la informacion de costos");
-        		Information(costState());
-        	} else {
-        		Information(costState());
-        	}
     	}else {
     		Information("Please enter a value into the real CIF field");
     	}
@@ -154,24 +143,26 @@ public class OrderController {
     	double inventarioFinalPT = theEnd.inventarioFinalPT();
     	double costoVenta = costosPT + inventarioInicialPT - inventarioFinalPT;
     	
+    	DecimalFormat formato = new DecimalFormat("#.00");
+    	
     	String result = "\t\t\t\t"+theEnd.getName() + "\n";
     	result+="\t\t\t\t Estado de Costos" + "\n\t\t\t\t"+theEnd.getPeriod()+
     			"\n--------------------------------------------------------------------\n--------------------------------------------------------------------\n";
     	result+="Inventario Inicial de MD \t\t\t"+0+"\n";
-    	result+="Compra de MD \t\t\t\t" + (consumoMaterialDirecto)+"\n";
+    	result+="Compra de MD \t\t\t\t" + formato.format(consumoMaterialDirecto)+"$"+"\n";
     	result+="Inventario Final de MD \t\t\t"+0+"\n--------------------------------------------------------------------"+"\n";
-    	result+="Consumo de MD \t\t\t\t"+(consumoMaterialDirecto)+"\n";
-    	result+="MOD \t\t\t\t\t\t"+(manoDeObraDirecta)+"\n";
-    	result+="CIF \t\t\t\t\t\t\t"+(costoIndirectoDeFabricacion)+"\n";
+    	result+="Consumo de MD \t\t\t\t"+formato.format(consumoMaterialDirecto)+"$"+"\n";
+    	result+="MOD \t\t\t\t\t\t"+formato.format(manoDeObraDirecta)+"$"+"\n";
+    	result+="CIF \t\t\t\t\t\t\t"+formato.format(costoIndirectoDeFabricacion)+"$"+"\n";
     	result+="--------------------------------------------------------------------\n";
-    	result+="Costos Agregados a produccion \t"+(costosAP)+"\n";
-    	result+="Inventario Inicial PP \t\t\t"+(inventarioInicialPP)+"\n";
-    	result+="Inventario Final PP \t\t\t\t"+(inventarioFinalPP)+"\n";
+    	result+="Costos Agregados a produccion \t"+formato.format(costosAP)+"$"+"\n";
+    	result+="Inventario Inicial PP \t\t\t"+formato.format(inventarioInicialPP)+"$"+"\n";
+    	result+="Inventario Final PP \t\t\t\t"+formato.format(inventarioFinalPP)+"$"+"\n";
     	result+="--------------------------------------------------------------------\n";
-    	result+="Costos PT \t\t\t\t\t"+(costosPT)+"\n";
-    	result+="Inventario Inicial PT \t\t\t"+(inventarioInicialPT)+"\n";
-    	result+="Inventario Final PT \t\t\t\t"+(inventarioFinalPT)+"\n";
-    	result+="Costo de Venta \t\t\t\t"+(costoVenta)+"\n";
+    	result+="Costos PT \t\t\t\t\t"+formato.format(costosPT)+"$"+"\n";
+    	result+="Inventario Inicial PT \t\t\t"+formato.format(inventarioInicialPT)+"$"+"\n";
+    	result+="Inventario Final PT \t\t\t\t"+formato.format(inventarioFinalPT)+"$"+"\n";
+    	result+="Costo de Venta \t\t\t\t"+formato.format(costoVenta)+"$"+"\n";
     	result+="--------------------------------------------------------------------";
     	return result;
     }

@@ -60,7 +60,7 @@ public class OrderController {
     private TextField cifPresupuestados;
     
     @FXML
-    private TextField cifPasados;
+    private TextField horasMaquina;
     
     @FXML
     private Label rateLabel;
@@ -88,25 +88,33 @@ public class OrderController {
     	int id = 0;
     	int mD = 0;
     	int moD = 0;
+    	double hours = 0;
     	try {
     		id = Integer.parseInt(orderNumber.getText());
         	mD = Integer.parseInt(md.getText());
         	moD = Integer.parseInt(mod.getText());
+        	if(baseType.getValue().equals("Horas maquina")) {
+        		hours = Integer.parseInt((String) baseType.getValue());
+        	}
     	}catch(NumberFormatException e) {
     		create.setDisable(true);
     		Information("Please Enter a number");
     	}
     	String statu = (String) status.getValue();
     	boolean esActual = actual.isSelected();
-    	Order newOrder = new Order(id, mD, moD, statu, esActual);
-    	if(!esActual) {
-    		newOrder.setCif(Double.parseDouble(cifPasados.getText()));
+    	Order newOrder = new Order(id, mD, moD, statu, esActual, hours);
+    	
+    	if(baseType.getValue().equals("Horas maquina")) {
+    		newOrder.calculateCif(realRate, hours);
     	}else {
     		newOrder.calculateCif(realRate, moD);
     	}
+    		
+    		
     	if(theEnd==null) {
     		theEnd = new ResultState(name.getText(), period.getText());
     	}
+    	
     	theEnd.addOrder(newOrder);
     	orderNumber.setText("" + (id+1));
     	
@@ -114,7 +122,7 @@ public class OrderController {
     	mod.setText("");
     	status.hide();
     	orderNumber.setText("");
-    	cifPasados.setText("");
+    	horasMaquina.setText("");
     	orderOption.hide();
     }
 
@@ -127,8 +135,12 @@ public class OrderController {
         	status.setDisable(false);
         	orderNumber.setDisable(false);
         	actual.setDisable(false);
-        	cifPasados.setDisable(false);
         	orderOption.setDisable(false);
+        	
+        	if(baseType.getValue().equals("Horas maquina")) {
+        		horasMaquina.setDisable(false);
+        		horasMaquina.setVisible(true);
+        	}
         	
         	double cifAux = Double.parseDouble(cifPresupuestados.getText());
     		double baseAux = Double.parseDouble(basePresupuestada.getText());
@@ -151,15 +163,6 @@ public class OrderController {
         	
     	}else {
     		Information("Please enter a value into the active fields");
-    	}
-    }
-    
-    @FXML
-    void actualPressed(ActionEvent event) {
-    	if(actual.isSelected()) {
-    		cifPasados.setDisable(true);
-    	}else {
-    		cifPasados.setDisable(false);
     	}
     }
 
@@ -231,7 +234,8 @@ public class OrderController {
     	status.setDisable(true);
     	actual.setDisable(true);
     	orderNumber.setDisable(true);
-    	cifPasados.setDisable(true);
+    	horasMaquina.setDisable(true);
+    	horasMaquina.setVisible(false);
     	orderOption.setDisable(true);
     }
 }

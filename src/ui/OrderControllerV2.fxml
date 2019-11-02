@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.3917112299465241" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="ui.OrderController">
+<SplitPane dividerPositions="0.3917112299465241" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.OrderController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="227.0">
          <children>
@@ -36,7 +36,7 @@
             <Label layoutX="28.0" layoutY="395.0" text="Tasa CIf" />
             <Label fx:id="rateLabel" layoutX="108.0" layoutY="368.0" prefHeight="72.0" prefWidth="139.0">
                <font>
-                  <Font size="13.0" />
+                  <Font size="29.0" />
                </font>
             </Label>
          </children></AnchorPane>
@@ -67,18 +67,18 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab fx:id="OrdersList" text="Lista Ordenes">
+                <Tab text="Lista Ordenes">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TableView layoutY="3.0" prefHeight="466.0" prefWidth="452.0">
-                                <columns>
-                                  <TableColumn fx:id="number" prefWidth="108.0" text="Numero Orden" />
-                                  <TableColumn fx:id="cost" prefWidth="136.0" text="Costo De Orden" />
-                                    <TableColumn fx:id="state" prefWidth="119.0" text="Estado De Orden" />
-                                    <TableColumn fx:id="actions" prefWidth="88.0" text="Acciones" />
-                                </columns>
-                              </TableView>
+                              <TableView fx:id="table" layoutX="-3.0" layoutY="1.0" prefHeight="425.0" prefWidth="459.0">
+                                 <columns>
+                                    <TableColumn fx:id="number" prefWidth="116.0" text="Numero de Orden" />
+                                    <TableColumn fx:id="mOD" prefWidth="135.0" text="Mano De Obra" />
+                                    <TableColumn fx:id="mD" minWidth="3.0" prefWidth="107.0" text="Matrial Directo" />
+                                    <TableColumn fx:id="state" minWidth="0.0" prefWidth="96.0" text="Estado" />
+                                 </columns></TableView>
+                              <Button fx:id="delete" layoutX="26.0" layoutY="433.0" mnemonicParsing="false" onAction="#delete" text="Eliminar Orden" />
                            </children>
                         </AnchorPane>
                   </content>

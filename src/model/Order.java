@@ -1,88 +1,90 @@
 package model;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class Order {
 	
 	public final static String INPROCESS = "in Process";
 	public final static String FINISHED = "Finished";
 	public final static String SOLD = "Sold";
 	
-	private int id;
-	private double md;
-	private double mod;
-	private double cif;
-	private boolean actual;
-	private double hours;
-	private String status;
+	private SimpleStringProperty id;
+	private SimpleDoubleProperty md;
+	private SimpleDoubleProperty mod;
+	private SimpleDoubleProperty cif;
+	private SimpleBooleanProperty actual;
+	private SimpleDoubleProperty hours;
+	private SimpleStringProperty status;
 	
-	public Order(int id, double md, double mod, String status, boolean actual, double hours) {
-		this.id = id;
-		this.md = md;
-		this.mod = mod;
-		this.status = status;
-		this.actual = actual;
-		this.hours = hours;
+	public Order(String id, double md, double mod, String status, boolean actual, double hours) {
+		this.id = new SimpleStringProperty(id);
+		this.md = new SimpleDoubleProperty(md);
+		this.mod = new SimpleDoubleProperty(mod);
+		this.status = new SimpleStringProperty(status);
+		this.actual = new SimpleBooleanProperty(actual);
+		this.hours = new SimpleDoubleProperty(hours);
 	}
 
-	public int getId() {
-		return id;
+	public String getId() {
+		return id.get();
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(String id) {
+		this.id = new SimpleStringProperty(id);
 	}
 
 	public double getMd() {
-		return md;
+		return md.get();
 	}
 
 	public void setMd(double md) {
-		this.md = md;
+		this.md = new SimpleDoubleProperty(md);
 	}
 
 	public double getMod() {
-		return mod;
+		return mod.get();
 	}
 
 	public void setMod(double mod) {
-		this.mod = mod;
+		this.mod = new SimpleDoubleProperty(mod);
 	}
 	
 	public double getCif() {
-		return cif;
+		return cif.get();
 	}
 
 	public void setCif(double cif) {
-		this.cif = cif;
+		this.cif =new SimpleDoubleProperty(cif);
 	}
 
 	public String getStatus() {
-		return status;
+		return status.get();
 	}
 
 	public void setStatus(String status) {
-		this.status = status;
+		this.status = new SimpleStringProperty(status);;
 	}
 	
 	public void calculateCif(double rate, double base) {
-		cif = rate * base;
+		cif = new SimpleDoubleProperty(rate*base);
 	}
 
 	public boolean isActual() {
-		return actual;
+		return actual.get();
 	}
 
 	public void setActual(boolean actual) {
-		this.actual = actual;
+		this.actual = new SimpleBooleanProperty(actual);
 	}
 
 	public double getHours() {
-		return hours;
+		return hours.get();
 	}
 
 	public void setHours(double hours) {
-		this.hours = hours;
+		this.hours = new SimpleDoubleProperty(hours);
 	}
-	
-	
-	
+
 }

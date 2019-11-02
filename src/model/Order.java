@@ -11,14 +11,16 @@ public class Order {
 	private double mod;
 	private double cif;
 	private boolean actual;
+	private double hours;
 	private String status;
 	
-	public Order(int id, double md, double mod, String status, boolean actual) {
+	public Order(int id, double md, double mod, String status, boolean actual, double hours) {
 		this.id = id;
 		this.md = md;
 		this.mod = mod;
 		this.status = status;
 		this.actual = actual;
+		this.hours = hours;
 	}
 
 	public int getId() {
@@ -72,5 +74,15 @@ public class Order {
 	public void setActual(boolean actual) {
 		this.actual = actual;
 	}
+
+	public double getHours() {
+		return hours;
+	}
+
+	public void setHours(double hours) {
+		this.hours = hours;
+	}
+	
+	
 	
 }

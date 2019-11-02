@@ -11,32 +11,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import model.Order;
 import model.ResultState;
 
 public class OrderController {
 
-	@FXML
+    @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
-
-    @FXML
-    private TextField md;
-
-    @FXML
-    private TextField mod;
-
-    @FXML
-    private ChoiceBox<String> status;
-
-    @FXML
-    private Button addOrder;
-
-    @FXML
-    private Button create;
 
     @FXML
     private TextField name;
@@ -45,31 +32,64 @@ public class OrderController {
     private TextField period;
 
     @FXML
-    private CheckBox actual;
+    private TextField cifPresupuestados;
 
-    @FXML
-    private TextField orderNumber;
-    
-    @FXML
-    private Button contin;
-    
     @FXML
     private TextField basePresupuestada;
     
     @FXML
-    private TextField cifPresupuestados;
+    private TextField orderNumber;
+
+    @FXML
+    private ChoiceBox<String> baseType;
+
+    @FXML
+    private Button contin;
+
+    @FXML
+    private TextField md;
+
+    @FXML
+    private TextField mod;
+
+    @FXML
+    private TextField cifPasados;
     
     @FXML
     private TextField horasMaquina;
     
     @FXML
-    private Label rateLabel;
+    private Label label;
     
     @FXML
-    private ChoiceBox<String> baseType;
+    private Label rateLabel;
 
     @FXML
-    private ChoiceBox<String> orderOption;
+    private ChoiceBox<String> status;
+
+    @FXML
+    private CheckBox actual;
+
+    @FXML
+    private Button addOrder;
+
+    @FXML
+    private Button create;
+
+    @FXML
+    private Tab OrdersList;
+
+    @FXML
+    private TableColumn<?, ?> number;
+
+    @FXML
+    private TableColumn<?, ?> cost;
+
+    @FXML
+    private TableColumn<?, ?> state;
+
+    @FXML
+    private TableColumn<?, ?> actions;
     
     private double realRate;
     
@@ -80,6 +100,16 @@ public class OrderController {
     	alert.setTitle("CG Costing");
     	alert.setContentText(message);
     	alert.show();
+    }
+
+    @FXML
+    void actualPressed(ActionEvent event) {
+    	if(actual.isSelected()) {
+    		cifPasados.setDisable(true);
+    	}else {
+    		Information("Please enter a value into the real CIF field");
+    		cifPasados.setDisable(false);
+    	}
     }
 
     @FXML
@@ -123,11 +153,10 @@ public class OrderController {
     	status.hide();
     	orderNumber.setText("");
     	horasMaquina.setText("");
-    	orderOption.hide();
     }
 
     @FXML
-    void contin(ActionEvent event){
+    void contin(ActionEvent event) {
     	if(!name.getText().equals("") && !period.getText().equals("") && !cifPresupuestados.getText().equals("")&&!basePresupuestada.getText().equals("")) {
     		addOrder.setDisable(false);
         	md.setDisable(false);
@@ -135,7 +164,6 @@ public class OrderController {
         	status.setDisable(false);
         	orderNumber.setDisable(false);
         	actual.setDisable(false);
-        	orderOption.setDisable(false);
         	
         	if(baseType.getValue().equals("Horas maquina")) {
         		horasMaquina.setDisable(false);
@@ -154,12 +182,21 @@ public class OrderController {
     		if(theEnd==null) {
         		theEnd = new ResultState(name.getText(), period.getText());
         	}
+    		
+    		if(baseType.getValue().equals("Mano de obra Directa")) {
+    			label.setVisible(false);
+    			horasMaquina.setVisible(false);
+    		}else {
+    			label.setVisible(true);
+    			horasMaquina.setVisible(true);
+    		}
     		        	
         	name.setDisable(true);
         	period.setDisable(true);
         	cifPresupuestados.setDisable(true);
         	basePresupuestada.setDisable(true);
         	contin.setDisable(true);
+        	baseType.setDisable(true);
         	
     	}else {
     		Information("Please enter a value into the active fields");
@@ -167,14 +204,13 @@ public class OrderController {
     }
 
     @FXML
-    void create(ActionEvent event) {	
+    void create(ActionEvent event) {
     	Information(costState());
     	cifPresupuestados.setText("");
     	basePresupuestada.setText("");
     }
     
     public String costState() {
-    	
     	double consumoMaterialDirecto = theEnd.consumoMaterialDirecto();
     	double manoDeObraDirecta = theEnd.manoDeObraDirecta();
     	double costoIndirectoDeFabricacion = theEnd.costoIndirectoDeFabricacion();
@@ -209,10 +245,6 @@ public class OrderController {
     	result+="--------------------------------------------------------------------";
     	return result;
     }
-    
-    public void createFile(String fileName) {
-    	
-    }
 
     @FXML
     void initialize() {
@@ -223,9 +255,8 @@ public class OrderController {
     	baseType.getItems().add("Mano de obra Directa");
     	baseType.getItems().add("Horas maquina");
     	
-    	orderOption.getItems().add("Agregar orden");
-    	orderOption.getItems().add("Editar Orden");
-    	orderOption.getItems().add("Eliminar Orden");
+    	label.setVisible(false);
+		horasMaquina.setVisible(false);
     	
     	addOrder.setDisable(true);
     	create.setDisable(true);
@@ -233,9 +264,5 @@ public class OrderController {
     	mod.setDisable(true);
     	status.setDisable(true);
     	actual.setDisable(true);
-    	orderNumber.setDisable(true);
-    	horasMaquina.setDisable(true);
-    	horasMaquina.setVisible(false);
-    	orderOption.setDisable(true);
     }
 }

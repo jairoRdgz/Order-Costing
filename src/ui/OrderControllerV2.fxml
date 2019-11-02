@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.3917112299465241" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="ui.OrderController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="227.0">
+         <children>
+            <Label layoutX="24.0" layoutY="10.0" text="Informacion De La Empresa">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="7.0" layoutY="53.0" text="Nombre empresa:" />
+            <TextField fx:id="name" layoutX="115.0" layoutY="49.0" />
+            <Label layoutX="56.0" layoutY="91.0" text="Periodo:" />
+            <TextField fx:id="period" layoutX="114.0" layoutY="87.0" />
+            <Label layoutX="4.0" layoutY="133.0" text="Cif Presupuestados" />
+            <TextField fx:id="cifPresupuestados" layoutX="115.0" layoutY="129.0" />
+            <TextField fx:id="basePresupuestada" layoutX="114.0" layoutY="176.0" />
+            <Label layoutX="2.0" layoutY="180.0" text="Base Presupuestada" />
+            <ChoiceBox fx:id="baseType" layoutX="115.0" layoutY="219.0" prefWidth="150.0" />
+            <Label layoutX="38.0" layoutY="223.0" text="tipo  de Base" />
+            <Button fx:id="contin" layoutX="177.0" layoutY="323.0" mnemonicParsing="false" onAction="#contin" text="Continuar" />
+            <Label layoutX="28.0" layoutY="395.0" text="Tasa CIf" />
+            <Label fx:id="rateLabel" layoutX="108.0" layoutY="368.0" prefHeight="72.0" prefWidth="139.0">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="484.0" prefWidth="603.0">
+         <children>
+            <TabPane prefHeight="501.0" prefWidth="452.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Agregar Ordenes">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="orderNumber" layoutX="123.0" layoutY="36.0" />
+                              <TextField fx:id="md" layoutX="123.0" layoutY="75.0" />
+                              <TextField fx:id="mod" layoutX="123.0" layoutY="109.0" />
+                              <TextField fx:id="cifPasados" layoutX="123.0" layoutY="150.0" />
+                              <Label layoutX="19.0" layoutY="40.0" text="Numero de orden:" />
+                              <Label layoutX="24.0" layoutY="78.0" text="Material Directo:" />
+                              <Label layoutX="2.0" layoutY="114.0" text="Mano de Obra Directa:" />
+                              <Label layoutX="65.0" layoutY="154.0" text="CIF:" />
+                              <Label layoutX="22.0" layoutY="196.0" text="Estado de Orden:" />
+                              <ChoiceBox fx:id="status" layoutX="123.0" layoutY="192.0" prefWidth="150.0" />
+                              <CheckBox fx:id="actual" layoutX="123.0" layoutY="273.0" mnemonicParsing="false" onAction="#actualPressed" text="Periodo Actual" />
+                              <Button fx:id="addOrder" layoutX="123.0" layoutY="335.0" mnemonicParsing="false" onAction="#addOrder" prefWidth="168.0" text="Agregar Orden" />
+                              <Button fx:id="create" layoutX="138.0" layoutY="378.0" mnemonicParsing="false" onAction="#create" text="Crear Estado de Costos" />
+                              <TextField fx:id="horasMaquina" layoutX="124.0" layoutY="232.0" />
+                              <Label fx:id="label" layoutX="40.0" layoutY="236.0" text="Horas Maquina" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab fx:id="OrdersList" text="Lista Ordenes">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView layoutY="3.0" prefHeight="466.0" prefWidth="452.0">
+                                <columns>
+                                  <TableColumn fx:id="number" prefWidth="108.0" text="Numero Orden" />
+                                  <TableColumn fx:id="cost" prefWidth="136.0" text="Costo De Orden" />
+                                    <TableColumn fx:id="state" prefWidth="119.0" text="Estado De Orden" />
+                                    <TableColumn fx:id="actions" prefWidth="88.0" text="Acciones" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </children></AnchorPane>
+  </items>
+</SplitPane>

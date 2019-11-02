@@ -45,7 +45,9 @@ public class ResultState {
 	public double consumoMaterialDirecto() {
 		double result = 0.0;
 		for (int i = 0; i <orders.size() ; i++) {
-			result+= orders.get(i).getMd();
+			if(orders.get(i).isActual()) {
+				result+= orders.get(i).getMd();
+			}
 		}
 		return result;
 	}

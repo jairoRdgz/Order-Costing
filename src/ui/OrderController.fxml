@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.OrderController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.OrderController">
    <children>
       <Label layoutX="231.0" layoutY="1.0" prefHeight="48.0" prefWidth="124.0" text="CG Costing">
          <font>
@@ -27,22 +27,29 @@
       <TextField fx:id="mod" layoutX="156.0" layoutY="364.0" />
       <ChoiceBox fx:id="status" layoutX="155.0" layoutY="429.0" prefWidth="150.0" />
       <Label layoutX="32.0" layoutY="433.0" text="Estado de Orden: " />
-      <Button fx:id="addOrder" layoutX="416.0" layoutY="333.0" mnemonicParsing="false" onAction="#addOrder" text="Agregar Orden" />
-      <Button fx:id="create" layoutX="394.0" layoutY="429.0" mnemonicParsing="false" onAction="#create" text="Crear Estado de Costos" />
+      <Button fx:id="addOrder" layoutX="430.0" layoutY="387.0" mnemonicParsing="false" onAction="#addOrder" text="Efectuar" />
+      <Button fx:id="create" layoutX="447.0" layoutY="512.0" mnemonicParsing="false" onAction="#create" text="Crear Estado de Costos" />
       <TextField fx:id="name" layoutX="154.0" layoutY="56.0" />
       <Label layoutX="23.0" layoutY="60.0" text="Nombre de la Empresa: " />
-      <Label layoutX="47.0" layoutY="100.0" text="Periodo de: " />
-      <TextField fx:id="period" layoutX="153.0" layoutY="96.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label layoutX="89.0" layoutY="102.0" text="Periodo: " />
+      <TextField fx:id="period" layoutX="153.0" layoutY="96.0" prefHeight="25.0" prefWidth="133.0" />
       <CheckBox fx:id="actual" layoutX="147.0" layoutY="469.0" mnemonicParsing="false" onAction="#actualPressed" text="Periodo Actual" />
       <Line endX="499.0" layoutX="100.0" layoutY="231.0" startX="-100.0" />
       <TextField fx:id="orderNumber" layoutX="157.0" layoutY="289.0" />
       <Label layoutX="31.0" layoutY="293.0" text="Numero de la orden" />
-      <Button fx:id="contin" layoutX="402.0" layoutY="98.0" mnemonicParsing="false" onAction="#contin" text="Continuar" />
+      <Button fx:id="contin" layoutX="384.0" layoutY="67.0" mnemonicParsing="false" onAction="#contin" text="Continuar" />
       <Label layoutX="66.0" layoutY="402.0" text="CIF" />
       <TextField fx:id="cifPasados" layoutX="157.0" layoutY="398.0" />
       <Label layoutX="27.0" layoutY="150.0" text="Cif Presupuestados:" />
       <TextField fx:id="cifPresupuestados" layoutX="141.0" layoutY="146.0" prefHeight="25.0" prefWidth="167.0" />
       <TextField fx:id="basePresupuestada" layoutX="141.0" layoutY="180.0" prefHeight="25.0" prefWidth="167.0" />
       <Label layoutX="25.0" layoutY="184.0" text="Base Presupuestada:" />
+      <Label fx:id="rateLabel" layoutX="367.0" layoutY="144.0" text="Tasa CIF:  ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="baseType" layoutX="319.0" layoutY="182.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="orderOption" layoutX="383.0" layoutY="353.0" prefWidth="150.0" />
    </children>
 </Pane>

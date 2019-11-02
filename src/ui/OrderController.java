@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.Order;
 import model.ResultState;
@@ -61,6 +62,15 @@ public class OrderController {
     @FXML
     private TextField cifPasados;
     
+    @FXML
+    private Label rateLabel;
+    
+    @FXML
+    private ChoiceBox<String> baseType;
+
+    @FXML
+    private ChoiceBox<String> orderOption;
+    
     private double realRate;
     
     private ResultState theEnd;
@@ -105,6 +115,7 @@ public class OrderController {
     	status.hide();
     	orderNumber.setText("");
     	cifPasados.setText("");
+    	orderOption.hide();
     }
 
     @FXML
@@ -117,10 +128,16 @@ public class OrderController {
         	orderNumber.setDisable(false);
         	actual.setDisable(false);
         	cifPasados.setDisable(false);
+        	orderOption.setDisable(false);
         	
         	double cifAux = Double.parseDouble(cifPresupuestados.getText());
     		double baseAux = Double.parseDouble(basePresupuestada.getText());
     		realRate= cifAux/baseAux;
+    		
+    		DecimalFormat formato = new DecimalFormat("#.00");
+    		
+    		
+    		rateLabel.setText(rateLabel.getText() + formato.format(realRate));
     		
     		if(theEnd==null) {
         		theEnd = new ResultState(name.getText(), period.getText());
@@ -130,6 +147,7 @@ public class OrderController {
         	period.setDisable(true);
         	cifPresupuestados.setDisable(true);
         	basePresupuestada.setDisable(true);
+        	contin.setDisable(true);
         	
     	}else {
     		Information("Please enter a value into the active fields");
@@ -199,6 +217,13 @@ public class OrderController {
     	status.getItems().add("Finished");
     	status.getItems().add("Sold");
     	
+    	baseType.getItems().add("Mano de obra Directa");
+    	baseType.getItems().add("Horas maquina");
+    	
+    	orderOption.getItems().add("Agregar orden");
+    	orderOption.getItems().add("Editar Orden");
+    	orderOption.getItems().add("Eliminar Orden");
+    	
     	addOrder.setDisable(true);
     	create.setDisable(true);
     	md.setDisable(true);
@@ -207,5 +232,6 @@ public class OrderController {
     	actual.setDisable(true);
     	orderNumber.setDisable(true);
     	cifPasados.setDisable(true);
+    	orderOption.setDisable(true);
     }
 }

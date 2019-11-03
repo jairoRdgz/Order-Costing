@@ -73,7 +73,7 @@
                            <children>
                               <TableView fx:id="table" layoutX="-3.0" layoutY="1.0" prefHeight="425.0" prefWidth="459.0">
                                  <columns>
-                                    <TableColumn fx:id="number" prefWidth="116.0" text="Numero de Orden" />
+                                    <TableColumn fx:id="number" onEditCommit="#edit" prefWidth="116.0" text="Numero de Orden" />
                                     <TableColumn fx:id="mOD" prefWidth="135.0" text="Mano De Obra" />
                                     <TableColumn fx:id="mD" minWidth="3.0" prefWidth="107.0" text="Matrial Directo" />
                                     <TableColumn fx:id="state" minWidth="0.0" prefWidth="96.0" text="Estado" />

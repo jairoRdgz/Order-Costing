@@ -60,7 +60,7 @@ public class OrderController {
     private TextField mod;
 
     @FXML
-    private TextField cifPasados;
+    private TextField cifReales;
     
     @FXML
     private TextField horasMaquina;
@@ -107,16 +107,6 @@ public class OrderController {
     	alert.setTitle("CG Costing");
     	alert.setContentText(message);
     	alert.show();
-    }
-
-    @FXML
-    void actualPressed(ActionEvent event) {
-    	if(actual.isSelected()) {
-    		cifPasados.setDisable(true);
-    	}else {
-    		Information("Please enter a value into the real CIF field");
-    		cifPasados.setDisable(false);
-    	}
     }
 
     @FXML
@@ -205,6 +195,7 @@ public class OrderController {
         	basePresupuestada.setDisable(true);
         	contin.setDisable(true);
         	baseType.setDisable(true);
+        	cifReales.setDisable(true);
         	
     	}else {
     		Information("Please enter a value into the active fields");
@@ -244,6 +235,13 @@ public class OrderController {
     	double inventarioInicialPT = theEnd.inventarioInicialPT();
     	double inventarioFinalPT = theEnd.inventarioFinalPT();
     	double costoVenta = costosPT + inventarioInicialPT - inventarioFinalPT;
+    	double variacion = costoIndirectoDeFabricacion - Double.parseDouble(cifReales.getText());
+    	String sobreOSub = "";
+    	if(variacion >= 0) {
+    		sobreOSub = "sobreaplicada";
+    	}else {
+    		sobreOSub = "subaplicada";
+    	}
     	
     	DecimalFormat formato = new DecimalFormat("#.00");
     	
@@ -265,7 +263,10 @@ public class OrderController {
     	result+="Inventario Inicial PT \t\t\t"+formato.format(inventarioInicialPT)+"$"+"\n";
     	result+="Inventario Final PT \t\t\t\t"+formato.format(inventarioFinalPT)+"$"+"\n";
     	result+="Costo de Venta \t\t\t\t"+formato.format(costoVenta)+"$"+"\n";
+    	result+="--------------------------------------------------------------------" + "\n\n";
+    	result+="Variacion CIF " + sobreOSub + "\t\t" + formato.format(variacion) + "\n\n";
     	result+="--------------------------------------------------------------------";
+    	
     	return result;
     }
     

@@ -106,6 +106,16 @@ public class OrderController {
     
     private ResultState theEnd;
     
+    public void updateInformation() {
+    	theEnd.consumoMaterialDirecto();
+    	theEnd.manoDeObraDirecta();
+    	theEnd.costoIndirectoDeFabricacion();
+    	theEnd.inventarioInicialPP();
+    	theEnd.inventarioFinalPP();
+    	theEnd.inventarioInicialPT();
+    	theEnd.inventarioFinalPT();
+    }
+    
     public void Information(String message) {
     	Alert alert = new Alert(AlertType.INFORMATION);
     	alert.setTitle("CG Costing");
@@ -229,25 +239,28 @@ public class OrderController {
 				theEnd.getOrders().remove(i);
 			}
 		}
-    	
+    	updateInformation();
     }
     
     @FXML
     void edit(TableColumn.CellEditEvent<Order, String> event) {
     	Order order = table.getSelectionModel().getSelectedItem();
     	order.setId(event.getNewValue());
+    	updateInformation();
     }
     
     @FXML
     void editMD(TableColumn.CellEditEvent<Order, String> event) {
     	Order order = table.getSelectionModel().getSelectedItem();
     	order.setMd(Double.parseDouble(event.getNewValue()));
+    	updateInformation();
     }
     
     @FXML
     void editMod(TableColumn.CellEditEvent<Order, String> event) {
     	Order order = table.getSelectionModel().getSelectedItem();
     	order.setMod(Double.parseDouble(event.getNewValue()));
+    	updateInformation();
     }
     
     @FXML
@@ -284,6 +297,7 @@ public class OrderController {
 			}
 		}
     	order.setStatus(value);
+    	updateInformation();
     }
     
     

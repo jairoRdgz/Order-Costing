@@ -182,39 +182,40 @@ public class OrderController {
         	}
         	double cifAux = 0.0;
         	double baseAux = 0.0;
+        	double real = 0.0;
         	try {
         		cifAux = Double.parseDouble(cifPresupuestados.getText());
         		baseAux = Double.parseDouble(basePresupuestada.getText());
-			} catch (NumberFormatException e) {
-				Information("Por Favor Ingrese un Valos numerico en los cif o la base");
+        		real = Double.parseDouble(cifReales.getText());
+	    		realRate= cifAux/baseAux;
+	    		
+	    		DecimalFormat formato = new DecimalFormat("#.00");
+	    		
+	    		
+	    		rateLabel.setText(rateLabel.getText() + formato.format(realRate));
+	    		
+	    		if(theEnd==null) {
+	        		theEnd = new ResultState(name.getText(), period.getText());
+	        	}
+	    		
+	    		if(baseType.getValue().equals("Mano de obra Directa")) {
+	    			label.setVisible(false);
+	    			horasMaquina.setVisible(false);
+	    		}else {
+	    			label.setVisible(true);
+	    			horasMaquina.setVisible(true);
+	    		}
+	    		        	
+	        	name.setDisable(true);
+	        	period.setDisable(true);
+	        	cifPresupuestados.setDisable(true);
+	        	basePresupuestada.setDisable(true);
+	        	contin.setDisable(true);
+	        	baseType.setDisable(true);
+	        	cifReales.setDisable(true);
+        	}catch (NumberFormatException e) {
+        		Information("Por Favor Ingrese un Valos numerico en los cif o la base");
 			}
-    		realRate= cifAux/baseAux;
-    		
-    		DecimalFormat formato = new DecimalFormat("#.00");
-    		
-    		
-    		rateLabel.setText(rateLabel.getText() + formato.format(realRate));
-    		
-    		if(theEnd==null) {
-        		theEnd = new ResultState(name.getText(), period.getText());
-        	}
-    		
-    		if(baseType.getValue().equals("Mano de obra Directa")) {
-    			label.setVisible(false);
-    			horasMaquina.setVisible(false);
-    		}else {
-    			label.setVisible(true);
-    			horasMaquina.setVisible(true);
-    		}
-    		        	
-        	name.setDisable(true);
-        	period.setDisable(true);
-        	cifPresupuestados.setDisable(true);
-        	basePresupuestada.setDisable(true);
-        	contin.setDisable(true);
-        	baseType.setDisable(true);
-        	cifReales.setDisable(true);
-        	
     	}else {
     		Information("Please enter a value into the active fields");
     	}

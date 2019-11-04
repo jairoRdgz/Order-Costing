@@ -2,6 +2,7 @@ package ui;
 
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
@@ -10,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -18,6 +21,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.DoubleStringConverter;
 import model.Order;
 import model.ResultState;
 
@@ -121,7 +125,7 @@ public class OrderController {
         	mD = Integer.parseInt(md.getText());
         	moD = Integer.parseInt(mod.getText());
         	if(baseType.getValue().equals("Horas maquina")) {
-        		hours = Integer.parseInt((String) baseType.getValue());
+        		hours = Integer.parseInt(horasMaquina.getText());
         	}
     	}catch(NumberFormatException e) {
     		create.setDisable(true);
@@ -136,8 +140,7 @@ public class OrderController {
     	}else {
     		newOrder.calculateCif(realRate, moD);
     	}
-    		
-    		
+    	
     	if(theEnd==null) {
     		theEnd = new ResultState(name.getText(), period.getText());
     	}
@@ -167,9 +170,14 @@ public class OrderController {
         		horasMaquina.setDisable(false);
         		horasMaquina.setVisible(true);
         	}
-        	
-        	double cifAux = Double.parseDouble(cifPresupuestados.getText());
-    		double baseAux = Double.parseDouble(basePresupuestada.getText());
+        	double cifAux = 0.0;
+        	double baseAux = 0.0;
+        	try {
+        		cifAux = Double.parseDouble(cifPresupuestados.getText());
+        		baseAux = Double.parseDouble(basePresupuestada.getText());
+			} catch (NumberFormatException e) {
+				Information("Por Favor Ingrese un Valos numerico en los cif o la base");
+			}
     		realRate= cifAux/baseAux;
     		
     		DecimalFormat formato = new DecimalFormat("#.00");
@@ -224,6 +232,61 @@ public class OrderController {
     	
     }
     
+    @FXML
+    void edit(TableColumn.CellEditEvent<Order, String> event) {
+    	Order order = table.getSelectionModel().getSelectedItem();
+    	order.setId(event.getNewValue());
+    }
+    
+    @FXML
+    void editMD(TableColumn.CellEditEvent<Order, String> event) {
+    	Order order = table.getSelectionModel().getSelectedItem();
+    	order.setMd(Double.parseDouble(event.getNewValue()));
+    }
+    
+    @FXML
+    void editMod(TableColumn.CellEditEvent<Order, String> event) {
+    	Order order = table.getSelectionModel().getSelectedItem();
+    	order.setMod(Double.parseDouble(event.getNewValue()));
+    }
+    
+    @FXML
+    void changeState(ActionEvent event) {
+    	Order order = table.getSelectionModel().getSelectedItem();    	
+    	String value ="";
+    	for (int i = 0; i < theEnd.getOrders().size(); i++) {
+			if (order == theEnd.getOrders().get(i)) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("CG Costing");
+				alert.setHeaderText("Va a realizar el cambio del estado de una orden");
+				alert.setContentText("Escoga a que Estado desea cambiar la orden seleccionada");
+
+				ButtonType inProcces = new ButtonType(Order.INPROCESS);
+				ButtonType finished = new ButtonType(Order.FINISHED);
+				ButtonType sold = new ButtonType(Order.SOLD);
+				ButtonType cancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
+
+				alert.getButtonTypes().setAll(inProcces, finished, sold, cancel);
+
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == inProcces){
+					value =Order.INPROCESS;
+				    theEnd.getOrders().get(i).setStatus(Order.INPROCESS);
+				} else if (result.get() == finished) {
+					value =Order.FINISHED;
+					theEnd.getOrders().get(i).setStatus(Order.FINISHED);
+				} else if (result.get() == sold) {
+					value =Order.SOLD;
+					theEnd.getOrders().get(i).setStatus(Order.SOLD);
+				} else {
+				   System.out.println("Orden cancelada");
+				}
+			}
+		}
+    	order.setStatus(value);
+    }
+    
+    
     public String costState() {
     	double consumoMaterialDirecto = theEnd.consumoMaterialDirecto();
     	double manoDeObraDirecta = theEnd.manoDeObraDirecta();
@@ -268,15 +331,8 @@ public class OrderController {
     	result+="--------------------------------------------------------------------";
     	
     	return result;
-    }
+    }    
     
-
-    @FXML
-    void edit(TableColumn.CellEditEvent<Order, String> event) {
-    	Order order = table.getSelectionModel().getSelectedItem();
-    	order.setId(event.getNewValue());
-    }
-
     @FXML
     void initialize() {
     	status.getItems().add("in Process");
@@ -303,6 +359,10 @@ public class OrderController {
     	
     	table.setEditable(true);
     	number.setCellFactory(TextFieldTableCell.forTableColumn());
-    	
+    	mD.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+    	mOD.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
     }
 }
+/*
+ 
+ */

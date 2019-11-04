@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.3917112299465241" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.OrderController">
+<SplitPane dividerPositions="0.3917112299465241" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.OrderController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="227.0">
          <children>
@@ -74,11 +74,12 @@
                               <TableView fx:id="table" layoutX="-3.0" layoutY="1.0" prefHeight="425.0" prefWidth="459.0">
                                  <columns>
                                     <TableColumn fx:id="number" onEditCommit="#edit" prefWidth="116.0" text="Numero de Orden" />
-                                    <TableColumn fx:id="mOD" prefWidth="135.0" text="Mano De Obra" />
-                                    <TableColumn fx:id="mD" minWidth="3.0" prefWidth="107.0" text="Matrial Directo" />
+                                    <TableColumn fx:id="mOD" onEditCommit="#editMod" prefWidth="135.0" text="Mano De Obra" />
+                                    <TableColumn fx:id="mD" minWidth="3.0" onEditCommit="#editMD" prefWidth="107.0" text="Matrial Directo" />
                                     <TableColumn fx:id="state" minWidth="0.0" prefWidth="96.0" text="Estado" />
                                  </columns></TableView>
                               <Button fx:id="delete" layoutX="26.0" layoutY="433.0" mnemonicParsing="false" onAction="#delete" text="Eliminar Orden" />
+                              <Button layoutX="136.0" layoutY="433.0" mnemonicParsing="false" onAction="#changeState" text="Cambiar estado de Orden" />
                            </children>
                         </AnchorPane>
                   </content>

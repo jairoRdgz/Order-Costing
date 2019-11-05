@@ -48,6 +48,7 @@ public class Order {
 	}
 
 	public void setMod(double mod) {
+		
 		this.mod = new SimpleDoubleProperty(mod);
 	}
 	

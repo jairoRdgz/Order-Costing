@@ -187,7 +187,11 @@ public class OrderController {
         		cifAux = Double.parseDouble(cifPresupuestados.getText());
         		baseAux = Double.parseDouble(basePresupuestada.getText());
         		real = Double.parseDouble(cifReales.getText());
-	    		realRate= cifAux/baseAux;
+        		if(cifAux>0||baseAux>0||real>0) {
+        			realRate= cifAux/baseAux;
+        		}else {
+        			Information("Por favor introduzca valores positivos");
+        		}
 	    		
 	    		DecimalFormat formato = new DecimalFormat("#.00");
 	    		
